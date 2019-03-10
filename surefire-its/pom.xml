@@ -169,7 +169,15 @@
                     <forkMode>once</forkMode>
                     <argLine>-server -Xmx64m -XX:+UseG1GC -XX:+TieredCompilation -XX:TieredStopAtLevel=1 -Djava.awt.headless=true -Djdk.net.URLClassPath.disableClassPathURLCheck=true</argLine>
                     <includes>
-                        <include>org/apache/**/*IT*.java</include>
+                        <include>org/apache/**/ConsoleOutputIT.java</include>
+                        <include>org/apache/**/Surefire1082ParallelJUnitParameterizedIT.java</include>
+                        <include>org/apache/**/Surefire1177TestngParallelSuitesIT.java</include>
+                        <include>org/apache/**/Surefire1364SystemPropertiesIT.java</include>
+                        <include>org/apache/**/Surefire1367AssumptionLogsIT.java</include>
+                        <include>org/apache/**/Surefire141PluggableProvidersIT.java</include>
+                        <include>org/apache/**/Surefire649EmptyStringSystemPropertiesIT.java</include>
+                        <include>org/apache/**/Surefire1098BalancedRunOrderIT.java</include>
+                        <include>org/apache/**/Surefire747MethodParallelWithSuiteCountIT.java</include>
                     </includes>
                     <!-- Pass current surefire version to the main suite so that it -->
                     <!-- can forward to all integration test projects. SUREFIRE-513 -->

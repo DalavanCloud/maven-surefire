@@ -24,6 +24,7 @@ import org.apache.maven.surefire.report.ConsoleOutputReceiver;
 import org.apache.maven.surefire.report.ReportEntry;
 import org.apache.maven.surefire.report.RunListener;
 import org.apache.maven.surefire.report.TestSetReportEntry;
+import org.apache.maven.surefire.report.RunMode;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -125,6 +126,11 @@ public class MockReporter
     {
     }
 
+    @Override
+    public RunMode markAs(RunMode currentRunMode) {
+        return null;
+    }
+
     public void testSkippedByUser( ReportEntry report )
     {
         testSkipped( report );
@@ -221,9 +227,9 @@ public class MockReporter
     }
 
     @Override
-    public void writeTestOutput( byte[] buf, int off, int len, boolean stdout )
+    public void writeTestOutput( String output, boolean newLine, boolean stdout )
     {
         events.add( stdout ? STDOUT : STDERR );
-        data.add( new String( buf, off, len ) );
+        data.add( newLine ? output + "\n" : output );
     }
 }

@@ -92,6 +92,7 @@ import static org.apache.maven.shared.utils.cli.CommandLineUtils.executeCommandL
 import static org.apache.maven.shared.utils.cli.ShutdownHookUtils.addShutDownHook;
 import static org.apache.maven.shared.utils.cli.ShutdownHookUtils.removeShutdownHook;
 import static org.apache.maven.surefire.booter.SystemPropertyManager.writePropertiesFile;
+import static org.apache.maven.surefire.cli.CommandLineOption.SHOW_ERRORS;
 import static org.apache.maven.surefire.suite.RunResult.SUCCESS;
 import static org.apache.maven.surefire.suite.RunResult.failure;
 import static org.apache.maven.surefire.suite.RunResult.timeout;
@@ -650,11 +651,14 @@ public class ForkStarter
                 if ( forkClient.isErrorInFork() )
                 {
                     StackTraceWriter errorInFork = forkClient.getErrorInFork();
-                    // noinspection ThrowFromFinallyBlock
+                    String errorInForkMessage =
+                            errorInFork == null ? null : errorInFork.getThrowable().getLocalizedMessage();
+                    boolean showStackTrace = providerConfiguration.getMainCliOptions().contains( SHOW_ERRORS );
+                    Object stackTrace = showStackTrace ? errorInFork : errorInForkMessage;
+                    //noinspection ThrowFromFinallyBlock
                     throw new SurefireBooterForkException( "There was an error in the forked process"
                                                         + detail
-                                                        + '\n'
-                                                        + errorInFork.getThrowable().getLocalizedMessage(), cause );
+                                                        + ( stackTrace == null ? "" : stackTrace ), cause );
                 }
                 if ( !forkClient.isSaidGoodBye() )
                 {
